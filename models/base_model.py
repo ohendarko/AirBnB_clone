@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 from datetime import datetime
+import uuid
 """
 This contains a class BaseModel that
 defines all common attributes/methods for other classes
@@ -9,10 +10,12 @@ class BaseModel():
     Defines all common attributes/methods
     for other classes
     """
-    def __init__(self, id, created_at, updated_at):
-        self.id = id
-        self.created_at = created_at
-        self.updated_at = updated_at
+    def __init__(self, *args, kwargs):
+        if not kwargs or "id" not in kwargs:
+            self.id = str(uuid.uuid4())
+        else:
+            self.id = kwargs["id"]
+        self.created_at = self.updated_at = datetime.now()
     def __str__(self):
         """print: [<class name>] (<self.id>) <self.__dict__>"""
         class_name = self.__class__.__name__
