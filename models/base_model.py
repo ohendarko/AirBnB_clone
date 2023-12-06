@@ -10,7 +10,7 @@ class BaseModel():
     Defines all common attributes/methods
     for other classes
     """
-    def __init__(self, *args, kwargs):
+    def __init__(self, *args, **kwargs):
         if not kwargs or "id" not in kwargs:
             self.id = str(uuid.uuid4())
         else:
