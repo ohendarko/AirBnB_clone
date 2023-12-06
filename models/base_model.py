@@ -11,10 +11,14 @@ class BaseModel():
     for other classes
     """
     def __init__(self, *args, **kwargs):
+        """constructor format allows for flexibility"""
+        # if key=value pairs not provided as arguments or
+        # a key named "id" is not part of **kwargs:
+            # create a unique id
         if not kwargs or "id" not in kwargs:
             self.id = str(uuid.uuid4())
         else:
-            self.id = kwargs["id"]
+            self.id = kwargs["id"] # use value from id key in kwargs as unique id
         self.created_at = self.updated_at = datetime.now()
     def __str__(self):
         """print: [<class name>] (<self.id>) <self.__dict__>"""
