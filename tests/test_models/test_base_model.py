@@ -12,11 +12,9 @@ class TestBaseModel(unittest.TestCase):
     """Test cases for the BaseModel class."""
 
     def setUp(self):
-        print("setUp success")
         pass
 
     def tearDown(self):
-        print("tearDown success")
         pass
 
     def test_instantiation(self):
@@ -35,6 +33,7 @@ class TestBaseModel(unittest.TestCase):
     
     def test_to_dict(self):
         """Tests the to_dict method of the BaseModel class"""
+        pass
 
         
 if __name__ == '__main__':
