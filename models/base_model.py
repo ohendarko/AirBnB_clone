@@ -5,6 +5,8 @@ import uuid
 This contains a class BaseModel that
 defines all common attributes/methods for other classes
 """
+
+
 class BaseModel():
     """
     Defines all common attributes/methods
@@ -12,19 +14,20 @@ class BaseModel():
     """
     def __init__(self, *args, **kwargs):
         """constructor format allows for flexibility"""
-        # if key=value pairs not provided as arguments or
+        # if key=value pairs not provided as arguments or,
         # a key named "id" is not part of **kwargs:
-            # create a unique id
+        # create a unique id
         if not kwargs or "id" not in kwargs:
             self.id = str(uuid.uuid4())
         else:
-            self.id = kwargs["id"] # use value from id key in kwargs as unique id
+            # use value from id key in kwargs as unique id
+            self.id = kwargs["id"]
         self.created_at = self.updated_at = datetime.now()
+
     def __str__(self):
         """print: [<class name>] (<self.id>) <self.__dict__>"""
         class_name = self.__class__.__name__
         return f"[{class_name}] ({self.id}) {str(self.__dict__)}"
-
 
     def save(self):
         """
@@ -32,7 +35,6 @@ class BaseModel():
         with the current datetime
         """
         self.updated_at = datetime.now()
-
 
     def to_dict(self):
         """
