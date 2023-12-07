@@ -1,0 +1,18 @@
+AirBnB_clone/
+|- AUTHORS
+|- __pycache__
+|- push.sh
+|- tests/
+|  |- __init__.py 
+|  |- __pycache__  
+|  |- test_models/
+|  |   |- __init__.py
+|  |   |- directory_structure
+|  |   |- test_base_model.py
+|- README.md
+|- console.py  
+|- test_base_model.py
+|- __init__.py 
+|- models/
+|  |- base_model.py  
+
