@@ -4,6 +4,7 @@
 
 import cmd
 
+
 class HBNBCommand(cmd.Cmd):
     """Defines the HBNBCommand interpreter class"""
     prompt = "(hbnb) "
@@ -12,16 +13,14 @@ class HBNBCommand(cmd.Cmd):
         """This command quits or exits the program"""
         return True
 
-    #was testing aliasing, will delete later
-    do_flee = do_quit
-    
     def do_EOF(self, arg):
-        """This command uses EOF signal to exit the program"""
+        """EOF signal exits program cleanly """
         return True
 
     def emptyline(self):
-       """ Executes nothing when empty line + ENTER"""
-       pass
+        """Does nothing when no args and ENTER key is pressed"""
+        pass
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
