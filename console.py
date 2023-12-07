@@ -3,6 +3,7 @@
 
 
 import cmd
+from models.base_model import BaseModel
 
 
 class HBNBCommand(cmd.Cmd):
@@ -20,6 +21,28 @@ class HBNBCommand(cmd.Cmd):
     def emptyline(self):
         """Does nothing when no args and ENTER key is pressed"""
         pass
+
+    def do_create(self, arg):
+        """Creates a new instance of BaseModel,
+            saves to the JSON file, prints the id
+        """
+        args = arg.split()
+
+        if not args:
+            print("** class name missing **")
+            return
+
+        class_name = args[0]
+
+        valid_class_list = ["BaseModel"]
+
+        if class_name not in valid_class_list:
+            print("** class doesn't exist **")
+            return
+
+        create_instance = BaseModel()
+        create_instance.save()
+        print(create_instance.id)
 
 
 if __name__ == '__main__':
