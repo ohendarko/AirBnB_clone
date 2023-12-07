@@ -48,11 +48,13 @@ class FileStorage():
         no exception should be raised)
         """
         try:
+            import datetime
+            from models.base_model import BaseModel
             with open(self.__file_path, 'r', encoding='utf-8') as f:
                 loaded_object = json.load(f)
                 for key,obj_dict in loaded_object.items():
                     class_name, obj_id = key.split('.')
-                    obj = globals()[class_name](**obj_dict)
+                    obj = BaseModel(**obj_dict)
                     self.__objects[key] = obj
         except FileNotFoundError:
             pass

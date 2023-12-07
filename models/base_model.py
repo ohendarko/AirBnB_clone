@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 from datetime import datetime
 import uuid
+from models import storage
 """
 This contains a class BaseModel that
 defines all common attributes/methods for other classes
@@ -10,16 +11,31 @@ class BaseModel():
     Defines all common attributes/methods
     for other classes
     """
+    fmt = "%Y-%m-%dT%H:%M:%S.%f"
     def __init__(self, *args, **kwargs):
         """constructor format allows for flexibility"""
+        fmt = "%Y-%m-%dT%H:%M:%S.%f"
         # if key=value pairs not provided as arguments or
         # a key named "id" is not part of **kwargs:
             # create a unique id
-        if not kwargs or "id" not in kwargs:
-            self.id = str(uuid.uuid4())
+        if kwargs:
+            for key, value in kwargs.items():
+                if key != "__class__":
+                    if key in ["created_at", "updated_at"]:
+                        setattr(self, key, datetime.strptime(value, self.fmt))
+                    else:
+                        setattr(self, key, value)
+            if "id" not in kwargs:
+                self.id = str(uuid.uuid4())
+            if "created_at" not in kwargs:
+                self.created_at = datetime.now()
+            if "updated_at" not in kwargs:
+                self.updated_at = datetime.now()
         else:
-            self.id = kwargs["id"] # use value from id key in kwargs as unique id
-        self.created_at = self.updated_at = datetime.now()
+            self.id = str(uuid.uuid4())
+            self.created_at = datetime.now()
+            self.updated_at = datetime.now()
+            storage.new(self)
     def __str__(self):
         """print: [<class name>] (<self.id>) <self.__dict__>"""
         class_name = self.__class__.__name__
@@ -32,6 +48,7 @@ class BaseModel():
         with the current datetime
         """
         self.updated_at = datetime.now()
+        storage.save()
 
 
     def to_dict(self):
