@@ -4,6 +4,7 @@
 
 import cmd
 from models.base_model import BaseModel
+from models import storage
 
 
 class HBNBCommand(cmd.Cmd):
@@ -43,6 +44,43 @@ class HBNBCommand(cmd.Cmd):
         create_instance = BaseModel()
         create_instance.save()
         print(create_instance.id)
+
+    def do_show(self, arg):
+        """prints the str rep of an instance"""
+        class_name, obj_id = None, None
+        args = arg.split()
+        if len(args) > 0:
+            class_name = args[0]
+        
+        if len(args) > 1:
+            obj_id = args[1]
+
+        if not args:
+            print("** class name missing **")
+            return
+
+        elif not obj_id:
+            print("** instance id missing **")
+        
+        valid_class_list = ["BaseModel"]
+
+        if class_name not in valid_class_list:
+            print("** class doesn't exist **")
+            return
+
+        else:
+            id_key = classname + "." + obj_id
+            obj = models.storage.all().get(key_id)
+            if not obj:
+                print("** no instance found **")
+            else:
+                print(obj)
+        
+
+
+    
+
+
 
 
 if __name__ == '__main__':
