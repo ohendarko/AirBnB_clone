@@ -40,7 +40,6 @@ class HBNBCommand(cmd.Cmd):
         if class_name not in valid_class_list:
             print("** class doesn't exist **")
             return
-
         create_instance = BaseModel()
         create_instance.save()
         print(create_instance.id)
@@ -69,17 +68,13 @@ class HBNBCommand(cmd.Cmd):
             return
 
         else:
-            id_key = classname + "." + obj_id
-            obj = models.storage.all().get(key_id)
+            id_key = class_name + "." + obj_id
+            obj = storage.all().get(id_key)
             if not obj:
                 print("** no instance found **")
             else:
                 print(obj)
         
-
-
-    
-
 
 
 
