@@ -110,16 +110,15 @@ class HBNBCommand(cmd.Cmd):
 
     def do_all(self, arg):
         """Prints all string representation of all existing instances"""
-        obj_str_list=[]
-        
+        obj_str_list = []
+
         if arg and arg[0]:
             class_name = arg
             valid_class_list = ["BaseModel"]
-            
             if class_name not in valid_class_list:
                 print("** class doesn't exist **")
                 return
-            
+
             for key, value in storage.all().items():
                 if class_name in key:
                     obj_str_list.append(str(value))
@@ -127,9 +126,8 @@ class HBNBCommand(cmd.Cmd):
         else:
             for key, value in storage.all().items():
                 obj_str_list.append(str(value))
-        
+
         print(obj_str_list)
-                    
 
 
 if __name__ == '__main__':
