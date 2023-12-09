@@ -4,8 +4,14 @@ from models.base_model import BaseModel
 
 class City(BaseModel):
     """City class that inherits from BaseModel"""
-    def __init__(self, *args, **kwargs):
+    def __init__(self, name="", state_id="", *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.name = name
+        self.state_id = state_id
 
-    state_id = ""
-    name = ""
+    def to_dict(self):
+        """to_dict overwrite"""
+        city_dict = super().to_dict()
+        city_dict["name"] = self.name
+        city_dict["State.id"] = self.state_id
+        return city_dict
