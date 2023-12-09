@@ -5,6 +5,7 @@ from models.base_model import BaseModel
 class City(BaseModel):
     """City class that inherits from BaseModel"""
     def __init__(self, name="", state_id="", *args, **kwargs):
+        """Class constructor"""
         super().__init__(*args, **kwargs)
         self.name = name
         self.state_id = state_id
