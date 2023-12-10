@@ -7,7 +7,7 @@ import unittest
 from models.user import User
 from models.base_model import BaseModel
 
-class TestUSer(unittest.TestCase):
+class TestUser(unittest.TestCase):
     """Test Cases for the USer Class."""
     
     def setUp(self):
@@ -25,3 +25,6 @@ class TestUSer(unittest.TestCase):
         """Test USer inheritance from BaseModel""" 
         user = User()
         self.assertTrue(issubclass(User, BaseModel))
+        
+if __name__ == "__main__":
+    unittest.main()
