@@ -151,7 +151,7 @@ class HBNBCommand(cmd.Cmd):
             return
 
         else:
-            id_key = class_name + "." + obj_id
+            id_key = f"{class_name}.{obj_id}"
             obj = storage.all().get(id_key)
             if not obj:
                 print("** no instance found **")
@@ -247,6 +247,42 @@ class HBNBCommand(cmd.Cmd):
         else:
             print("** attribute cannot be updated or does not exist **")
 
+
+    def do_count(self, arg):
+        """
+        retrieve the number of instances of a class:
+        <class name>.count()
+        """
+        class_name = None
+        args = arg.split()
+        if len(args) > 0:
+            class_name = args[0]
+
+        if not args:
+            print("** class name missing **")
+            return
+
+        valid_class_list = ["BaseModel",
+                            "User",
+                            "Amenity",
+                            "City",
+                            "Place",
+                            "Review",
+                            "State"]
+
+        if class_name not in valid_class_list:
+            print("** class doesn't exist **")
+            return
+
+        else:
+            count = 0
+            for key, obj in storage.all().items():
+                if class_name == obj.__class__.__name__:
+                    count += 1
+
+            print(count)
+            self.prompt = "(hbnb) "
+            return self.onecmd("")
 
 
 if __name__ == '__main__':
