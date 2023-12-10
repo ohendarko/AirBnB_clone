@@ -52,11 +52,27 @@ class FileStorage():
         try:
             import datetime
             from models.base_model import BaseModel
+            from models.amenity import Amenity
+            from models.state import State
+            from models.city import City
+            from models.user import User
+            from models.place import Place
+            from models.review import Review
             with open(self.__file_path, 'r', encoding='utf-8') as f:
-                loaded_object = json.load(f)
-                for key, obj_dict in loaded_object.items():
+                loaded_objects = json.load(f)
+                for key, obj_dict in loaded_objects.items():
                     class_name, obj_id = key.split('.')
-                    obj = BaseModel(**obj_dict)
-                    self.__objects[key] = obj
+                    class_mapping = {
+                        'BaseModel': BaseModel,
+                        'State': State,
+                        'City': City,
+                        'Amenity': Amenity,
+                        'Place': Place,
+                        'Review': Review
+                    }
+                    if class_name in class_mapping:
+                        obj_class = class_mapping[class_name]
+                        obj = obj_class(**obj_dict)
+                        self.__objects[key] = obj
         except FileNotFoundError:
             pass

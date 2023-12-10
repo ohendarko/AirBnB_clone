@@ -3,6 +3,8 @@
 
 
 import cmd
+import sys
+
 from models.base_model import BaseModel
 from models import storage
 from models.user import User
@@ -11,6 +13,16 @@ from models.user import User
 class HBNBCommand(cmd.Cmd):
     """Defines  the HBNBCommand interpreter class"""
     prompt = "(hbnb) "
+
+    def precmd(self, line):
+        """Modifying class.command syntax"""
+        if not sys.stdin.isatty():
+            print()
+        if '.' in line:
+            clas, command = line.split('.')
+            line = f"{command} {clas}"
+
+        return cmd.Cmd.precmd(self, line)
 
     def do_quit(self, arg):
         """Quit command to exit the program"""
@@ -36,12 +48,34 @@ class HBNBCommand(cmd.Cmd):
 
         class_name = args[0]
 
-        valid_class_list = ["BaseModel"]
+        valid_class_list = ["BaseModel",
+                            "User",
+                            "Amenity",
+                            "City",
+                            "Place",
+                            "Review",
+                            "State"]
 
         if class_name not in valid_class_list:
             print("** class doesn't exist **")
             return
-        create_instance = BaseModel()
+        from models.base_model import BaseModel
+        from models.amenity import Amenity
+        from models.state import State
+        from models.city import City
+        from models.user import User
+        from models.place import Place
+        from models.review import Review
+        class_mapping = {
+            'BaseModel': BaseModel,
+            'State': State,
+            'City': City,
+            'Amenity': Amenity,
+            'Place': Place,
+            'Review': Review,
+            'User': User
+        }
+        create_instance = class_mapping[class_name]()
         create_instance.save()
         print(create_instance.id)
 
@@ -63,7 +97,13 @@ class HBNBCommand(cmd.Cmd):
             print("** instance id missing **")
             return
 
-        valid_class_list = ["BaseModel"]
+        valid_class_list = ["BaseModel",
+                            "User",
+                            "Amenity",
+                            "City",
+                            "Place",
+                            "Review",
+                            "State"]
 
         if class_name not in valid_class_list:
             print("** class doesn't exist **")
@@ -95,7 +135,13 @@ class HBNBCommand(cmd.Cmd):
         elif not obj_id:
             print("** instance id missing **")
 
-        valid_class_list = ["BaseModel"]
+        valid_class_list = ["BaseModel",
+                            "User",
+                            "Amenity",
+                            "City",
+                            "Place",
+                            "Review",
+                            "State"]
 
         if class_name not in valid_class_list:
             print("** class doesn't exist **")
@@ -116,7 +162,13 @@ class HBNBCommand(cmd.Cmd):
 
         if arg and arg[0]:
             class_name = arg
-            valid_class_list = ["BaseModel"]
+            valid_class_list = ["BaseModel",
+                                "User",
+                                "Amenity",
+                                "City",
+                                "Place",
+                                "Review",
+                                "State"]
             if class_name not in valid_class_list:
                 print("** class doesn't exist **")
                 return
@@ -143,7 +195,13 @@ class HBNBCommand(cmd.Cmd):
         attrbt_name = args[2]
         attrbt_value = args[3]
 
-        valid_class_list = ["BaseModel"]
+        valid_class_list = ["BaseModel",
+                            "User",
+                            "Amenity",
+                            "City",
+                            "Place",
+                            "Review",
+                            "State"]
 
         if not class_name:
             print("** class name missing **")
