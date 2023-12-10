@@ -7,15 +7,40 @@ Unit test module for the BaseModel Class.
 import unittest
 from models.base_model import BaseModel
 from datetime import datetime
+import time
 
-my_model = BaseModel()
-my_model.name = "My First Model"
-my_model.my_number = 89
-print(my_model)
-my_model.save()
-print(my_model)
-my_model_json = my_model.to_dict()
-print(my_model_json)
-print("JSON of my_model:")
-for key in my_model_json.keys():
-    print("\t{}: ({}) - {}".format(key, type(my_model_json[key]), my_model_json[key]))
+
+class TestBaseModel(unittest.TestCase):
+    """Test Cases for the BaseModel class"""
+    
+    def setUp(self):
+        """Sets up test methods."""
+        pass
+    
+    def tearDown(self):
+        """Tears down test methods."""
+        pass
+    
+    def test_instantiation(self):
+        """Tests instantiation for BAseModel"""
+        base_model = BaseModel()
+        self.assertIsInstance(base_model, BaseModel)
+        
+    def test_instantiation_kwargs(self):
+        """Tests instantiation with kwargs"""
+        base_model = BaseModel()
+        base_model.name = "Kwadwo"
+        base_model.my_number = 100
+        base_model_json = base_model.to_dict()
+        new_base_model = BaseModel(**base_model_json)
+        self.assertEqual(new_base_model.to_dict(), base_model.to_dict())
+         
+    def test_save(self):
+        base_model = BaseModel()
+        initial_update_time = base_model.updated_at
+        time.sleep(1)
+        base_model.save()
+        date_now = datetime.now()
+        time_diff = date_now - initial_update_time 
+        self.assertTrue(time_diff.total_seconds() < 2)
+         
