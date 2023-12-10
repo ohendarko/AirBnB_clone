@@ -43,4 +43,18 @@ class TestBaseModel(unittest.TestCase):
         date_now = datetime.now()
         time_diff = date_now - initial_update_time 
         self.assertTrue(time_diff.total_seconds() < 2)
+        
+    def test_str(self):
+        base_model = BaseModel()
+        base_model_str = str(base_model)
+        self.assertIn('[BaseModel]', base_model_str)
+        self.assertIn(base_model.id, base_model_str)
+        self.assertIn('created_at', base_model_str)
+        self.assertIn('updated_at', base_model_str)
+        self.assertIn('{', base_model_str)
+        self.assertIn('}', base_model_str)
+        
+
+if __name__ =='__main__':
+    unittest.main()
          
