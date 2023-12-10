@@ -2,22 +2,26 @@
 from datetime import datetime
 import uuid
 from models import storage
+# change
 """
 This contains a class BaseModel that
 defines all common attributes/methods for other classes
 """
+
+
 class BaseModel():
     """
     Defines all common attributes/methods
     for other classes
     """
     fmt = "%Y-%m-%dT%H:%M:%S.%f"
+
     def __init__(self, *args, **kwargs):
         """constructor format allows for flexibility"""
         fmt = "%Y-%m-%dT%H:%M:%S.%f"
         # if key=value pairs not provided as arguments or
         # a key named "id" is not part of **kwargs:
-            # create a unique id
+        #     create a unique id
         if kwargs:
             for key, value in kwargs.items():
                 if key != "__class__":
@@ -36,11 +40,11 @@ class BaseModel():
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
             storage.new(self)
+
     def __str__(self):
         """print: [<class name>] (<self.id>) <self.__dict__>"""
         class_name = self.__class__.__name__
         return f"[{class_name}] ({self.id}) {str(self.__dict__)}"
-
 
     def save(self):
         """
@@ -49,7 +53,6 @@ class BaseModel():
         """
         self.updated_at = datetime.now()
         storage.save()
-
 
     def to_dict(self):
         """

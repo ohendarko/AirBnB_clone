@@ -2,10 +2,12 @@
 import json
 # from models.base_model import BaseModel
 """
-Contains a class FileStorage that 
+Contains a class FileStorage that
 serializes instances to a JSON file
 and deserializes JSON file to instances:
 """
+
+
 class FileStorage():
     """
     Serializes instances to a JSON file
@@ -42,7 +44,7 @@ class FileStorage():
 
     def reload(self):
         """
-        deserializes the JSON file to __objects 
+        deserializes the JSON file to __objects
         (only if the JSON file (__file_path) exists ;
         otherwise, do nothing. If the file doesn’t exist,
         no exception should be raised)
@@ -52,7 +54,7 @@ class FileStorage():
             from models.base_model import BaseModel
             with open(self.__file_path, 'r', encoding='utf-8') as f:
                 loaded_object = json.load(f)
-                for key,obj_dict in loaded_object.items():
+                for key, obj_dict in loaded_object.items():
                     class_name, obj_id = key.split('.')
                     obj = BaseModel(**obj_dict)
                     self.__objects[key] = obj
