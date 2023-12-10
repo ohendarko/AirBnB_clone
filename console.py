@@ -5,6 +5,7 @@
 import cmd
 from models.base_model import BaseModel
 from models import storage
+from models.user import User
 
 
 class HBNBCommand(cmd.Cmd):
@@ -60,6 +61,7 @@ class HBNBCommand(cmd.Cmd):
 
         elif not obj_id:
             print("** instance id missing **")
+            return
 
         valid_class_list = ["BaseModel"]
 
@@ -128,6 +130,62 @@ class HBNBCommand(cmd.Cmd):
                 obj_str_list.append(str(value))
 
         print(obj_str_list)
+                    
+    def do_update(self, arg):
+        args = arg.split()
+        
+        if len(args) < 4:
+            print("** insufficient arguments **")
+            return
+
+        class_name = args[0]
+        obj_id = args[1]
+        attrbt_name = args[2]
+        attrbt_value = args[3]
+
+        valid_class_list = ["BaseModel"]
+
+        if not class_name:
+            print("** class name missing **")
+            return
+
+        if class_name not in valid_class_list:
+            print("** class doesn't exist **")
+            return
+
+        if not obj_id:
+            print("** instance id missing **")
+            return
+
+        if not attrbt_name:
+            print("** attribute name missing **")
+            return
+
+        if not attrbt_value:
+            print("** value missing **")
+            return
+
+        id_key = class_name + "." + obj_id
+        obj = storage.all().get(id_key)
+
+        if not obj:
+            print("** no instance found **")
+            return
+
+        # Update the attribute of the object if it exists and is updatable
+        if hasattr(obj, attrbt_name) and not attrbt_name.startswith(('id', 'created_at', 'updated_at')):
+            # Try to cast the attribute value to its original type
+            try:
+                attrbt_value = type(getattr(obj, attrbt_name))(attrbt_value)
+            except (ValueError, TypeError):
+                print("** value type not compatible with attribute **")
+                return
+
+            setattr(obj, attrbt_name, attrbt_value)
+            obj.save()
+        else:
+            print("** attribute cannot be updated or does not exist **")
+
 
 
 if __name__ == '__main__':
