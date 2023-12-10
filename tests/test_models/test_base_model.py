@@ -4,7 +4,9 @@ Unit test module for the BaseModel Class.
 """
 
 
+import unittest
 from models.base_model import BaseModel
+from datetime import datetime
 
 my_model = BaseModel()
 my_model.name = "My First Model"
