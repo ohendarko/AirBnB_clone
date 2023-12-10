@@ -20,6 +20,9 @@ class HBNBCommand(cmd.Cmd):
             print()
         if '.' in line:
             clas, command = line.split('.')
+            if '()' in command:
+                # Remove '()' from the command
+                command = command[:-2]
             line = f"{command} {clas}"
 
         return cmd.Cmd.precmd(self, line)
