@@ -8,6 +8,9 @@ import unittest
 from models.base_model import BaseModel
 from datetime import datetime
 import time
+from models import storage
+import os
+
 
 
 class TestBaseModel(unittest.TestCase):
@@ -20,6 +23,9 @@ class TestBaseModel(unittest.TestCase):
     def tearDown(self):
         """Tears down test methods."""
         pass
+    
+    # Reminder: Need to add a method to clear the storage after tests,
+    # have it called in the tearDown method.
     
     def test_instantiation(self):
         """Tests instantiation for BAseModel"""
@@ -53,6 +59,20 @@ class TestBaseModel(unittest.TestCase):
         self.assertIn('updated_at', base_model_str)
         self.assertIn('{', base_model_str)
         self.assertIn('}', base_model_str)
+        
+    def test_to_dict(self):
+        base_model = BaseModel()
+        base_model_dict = base_model.to_dict()
+        expected_dict = {
+            '__class__': 'BaseModel',
+            'created_at': base_model.created_at.isoformat(),
+            'updated_at': base_model.updated_at.isoformat()
+            }
+        try:
+            del base_model_dict['id']
+        except KeyError:
+            pass
+        self.assertDictEqual(base_model_dict, expected_dict)
         
 
 if __name__ =='__main__':
