@@ -1,13 +1,8 @@
 #!/usr/bin/python3
 """Console module for the command interpreter"""
-
-
 import cmd
 import sys
-
-from models.base_model import BaseModel
 from models import storage
-from models.user import User
 
 
 class HBNBCommand(cmd.Cmd):
@@ -185,10 +180,10 @@ class HBNBCommand(cmd.Cmd):
                 obj_str_list.append(str(value))
 
         print(obj_str_list)
-                    
+
     def do_update(self, arg):
         args = arg.split()
-        
+
         if len(args) < 4:
             print("** insufficient arguments **")
             return
@@ -234,7 +229,8 @@ class HBNBCommand(cmd.Cmd):
             return
 
         # Update the attribute of the object if it exists and is updatable
-        if hasattr(obj, attrbt_name) and not attrbt_name.startswith(('id', 'created_at', 'updated_at')):
+        if (hasattr(obj, attrbt_name) and not attrbt_name.startswith
+                (('id', 'created_at', 'updated_at'))):
             # Try to cast the attribute value to its original type
             try:
                 attrbt_value = type(getattr(obj, attrbt_name))(attrbt_value)
@@ -246,7 +242,6 @@ class HBNBCommand(cmd.Cmd):
             obj.save()
         else:
             print("** attribute cannot be updated or does not exist **")
-
 
     def do_count(self, arg):
         """
