@@ -19,7 +19,13 @@ class HBNBCommand(cmd.Cmd):
                 # Remove '()' from the command
                 command = command[:-2]
             line = f"{command} {clas}"
-
+            print(line)
+            if 'show' in line or 'destroy' in line:
+                if '("' in command:
+                    commd, cls_id = command.split('("')
+                    cls_id = cls_id[:-2]
+                line = f"{commd} {clas} {cls_id}"
+                print(line)
         return cmd.Cmd.precmd(self, line)
 
     def do_quit(self, arg):
