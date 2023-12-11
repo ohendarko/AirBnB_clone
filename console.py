@@ -182,6 +182,7 @@ class HBNBCommand(cmd.Cmd):
         print(obj_str_list)
 
     def do_update(self, arg):
+        """Updates an attrobute of the model"""
         args = arg.split()
 
         if len(args) < 4:
